@@ -4,12 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.ArrayList;
@@ -23,25 +26,30 @@ public class Truck extends Vehicle {
 
     private List<Person> passengers;
     private boolean stop;
-    private boolean hovered;
+
+    private boolean hover;
+    private HoveringMessage passengerInfo;
 
     public Truck(float x, float y, float speed, String png) {
         super(x, y, speed, png);
 
         this.passengers = new ArrayList<>();
         this.stop = false;
-        this.hovered = false;
+        this.hover = false;
+
+        // Message shown above the truck when touched
+        this.passengerInfo = new HoveringMessage(this,"Soldiers: ");
 
         addListener(new ClickListener() {
-
+            @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                Truck.this.hovered = true;
+                super.enter(event, x, y, pointer, fromActor);
+                passengerInfo.setHover(true);
             }
 
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                Truck.this.hovered = false;
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                passengerInfo.setHover(false);
             }
-
         });
     }
 
@@ -66,9 +74,5 @@ public class Truck extends Vehicle {
     }
 
     private void checkHover() {
-    }
-
-    public void drawPassengerInfo(ShapeRenderer renderer) {
-        // use a label instead of shape as 2dscene likes ir better
     }
 }

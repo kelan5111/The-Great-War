@@ -18,11 +18,11 @@ import java.util.List;
 public class BattleScreen implements Screen {
 
     static OrthographicCamera camera;
+    static Stage stage;
 
     private final MainGame game;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
-    private Stage stage;
 
     private Trench trench1;
     private Trench trench2;
@@ -43,7 +43,7 @@ public class BattleScreen implements Screen {
         //Waypoints
         this.mainWaypoints = new ArrayList<Waypoint>();
 
-        this.stage = new Stage(new ScreenViewport(camera));
+        stage = new Stage(new ScreenViewport(camera));
 
         //Objects drawn
         this.trench1 = new Trench(Faction.CENTRAL_POWER, 100f, game.getHeight());
@@ -51,7 +51,7 @@ public class BattleScreen implements Screen {
 
         // In BattleScreen.java
         this.truck1 = new Truck(100, 300, 25, "Truck.png");
-        this.stage.addActor(this.truck1);
+        stage.addActor(this.truck1);
     }
 
 
@@ -80,7 +80,7 @@ public class BattleScreen implements Screen {
         camera.update();
 
         //Updating acts
-        this.stage.act(delta);
+        stage.act(delta);
 
         //Draw shapes
         this.shapeRenderer.setProjectionMatrix(camera.combined);
@@ -93,7 +93,7 @@ public class BattleScreen implements Screen {
 
         this.shapeRenderer.end();
 
-        this.stage.draw();
+        stage.draw();
     }
 
     private void buildMainWaypoints() {
