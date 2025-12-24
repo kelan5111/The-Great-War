@@ -38,7 +38,8 @@ public class Truck extends Vehicle {
         this.hover = false;
 
         // Message shown above the truck when touched
-        this.passengerInfo = new HoveringMessage(this,"Soldiers: ");
+        this.passengerInfo = new HoveringMessage(this,"Soldiers: 0");
+        BattleScreen.stage.addActor(this.passengerInfo);
 
         addListener(new ClickListener() {
             @Override

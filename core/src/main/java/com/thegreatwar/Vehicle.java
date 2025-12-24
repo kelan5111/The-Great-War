@@ -26,8 +26,6 @@ public abstract class Vehicle extends Actor {
 
     public Vehicle(float x, float y, float speed, String png) {
         this.sheet = new Texture(png);
-        System.out.println("ACTUAL IMAGE WIDTH: " + sheet.getWidth());
-        System.out.println("ACTUAL IMAGE HEIGHT: " + sheet.getHeight());
         this.frames = TextureRegion.split(sheet, FRAME_WIDTH, FRAME_HEIGHT);
         this.animation = new Animation<>(0.15f, frames[0]);
         this.stateTime = 0f;

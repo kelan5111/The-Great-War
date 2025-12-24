@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BattleScreen implements Screen {
+    private final float ZOOM_IN_LIMIT = 0.5f;
+    private final float ZOOM_OUT_LIMIT = 1.5f;
 
     static OrthographicCamera camera;
     static Stage stage;
@@ -71,10 +73,13 @@ public class BattleScreen implements Screen {
 
         float cameraSpeed = 300 * delta; // 300 units per second
 
+        //Move the camera WASD
         if (Gdx.input.isKeyPressed(Input.Keys.W)) camera.position.y += cameraSpeed;
         if (Gdx.input.isKeyPressed(Input.Keys.S)) camera.position.y -= cameraSpeed;
         if (Gdx.input.isKeyPressed(Input.Keys.A)) camera.position.x -= cameraSpeed;
         if (Gdx.input.isKeyPressed(Input.Keys.D)) camera.position.x += cameraSpeed;
+        //Manage the zoom Q and E
+        this.manageZoom();
 
         //Update everything
         camera.update();
@@ -111,6 +116,19 @@ public class BattleScreen implements Screen {
             waypoint.draw(this.shapeRenderer);
             if (show) waypoint.show();
         }
+    }
+
+    private void manageZoom() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q) && camera.zoom < ZOOM_OUT_LIMIT) {
+            camera.zoom += 1.0f * deltaTime;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.E) && camera.zoom > ZOOM_IN_LIMIT) {
+            camera.zoom -= 1.0f * deltaTime;
+        }
+
+        camera.update();
     }
 
     static OrthographicCamera getCamera() {
