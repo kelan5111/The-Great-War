@@ -25,6 +25,7 @@ public class BattleScreen implements Screen {
     private final MainGame game;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
+    private DragSelect dragSelect;
 
     private Trench trench1;
     private Trench trench2;
@@ -47,6 +48,9 @@ public class BattleScreen implements Screen {
 
         stage = new Stage(new ScreenViewport(camera));
 
+        this.dragSelect = new DragSelect();
+        stage.addActor(dragSelect);
+
         //Objects drawn
         this.trench1 = new Trench(Faction.CENTRAL_POWER, 100f, game.getHeight());
         this.trench2 = new Trench(Faction.TRIPLE_ENTENTE, game.getWidth() - 125f, game.getHeight());
@@ -63,7 +67,7 @@ public class BattleScreen implements Screen {
         this.buildMainWaypoints();
 
         Gdx.input.setInputProcessor(stage);
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
     }
 
     @Override
@@ -78,6 +82,7 @@ public class BattleScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.S)) camera.position.y -= cameraSpeed;
         if (Gdx.input.isKeyPressed(Input.Keys.A)) camera.position.x -= cameraSpeed;
         if (Gdx.input.isKeyPressed(Input.Keys.D)) camera.position.x += cameraSpeed;
+
         //Manage the zoom Q and E
         this.manageZoom();
 
@@ -127,7 +132,6 @@ public class BattleScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.E) && camera.zoom > ZOOM_IN_LIMIT) {
             camera.zoom -= 1.0f * deltaTime;
         }
-
         camera.update();
     }
 
